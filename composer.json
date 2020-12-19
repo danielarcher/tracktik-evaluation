@@ -5,5 +5,11 @@
         "psr-4": {
             "Store\\": "src/"
         }
-    }
+    },
+    "authors": [
+        {
+            "name": "Daniel Archer",
+            "email": "contato@danielcramer.com.br"
+        }
+    ]
 }
