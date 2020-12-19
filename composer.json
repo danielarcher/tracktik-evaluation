@@ -1,0 +1,9 @@
+{
+    "name": "tracktik/evaluation",
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "Store\\": "src/"
+        }
+    }
+}
