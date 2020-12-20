@@ -2,8 +2,13 @@
 
 namespace Store\Electronics;
 
-use Store\ElectronicType;
+use Store\ElectronicItem;
 
-abstract class Controller extends \Store\ElectronicItem
+/**
+ * Class Controller
+ *
+ * @package Store\Electronics
+ */
+abstract class Controller extends ElectronicItem
 {
 }

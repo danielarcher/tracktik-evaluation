@@ -2,7 +2,14 @@
 
 namespace Store\Exceptions;
 
-class MaxExtrasAttached extends \Exception
+use Exception;
+
+/**
+ * Class MaxExtrasAttached
+ *
+ * @package Store\Exceptions
+ */
+class MaxExtrasAttached extends Exception
 {
 
 }

@@ -5,6 +5,11 @@ namespace Store;
 use Store\Exceptions\InvalidItemOnList;
 use Store\Exceptions\InvalidType;
 
+/**
+ * Class ElectronicItems
+ *
+ * @package Store
+ */
 class ElectronicItems implements \Countable
 {
     /**
@@ -12,12 +17,39 @@ class ElectronicItems implements \Countable
      */
     private $items = [];
 
+    /**
+     * ElectronicItems constructor.
+     *
+     * @param array $items
+     *
+     * @throws InvalidItemOnList
+     */
     public function __construct(array $items)
     {
         $this->items = $items;
         $this->assertItemsAreValid($items);
     }
 
+    /**
+     * @param array|null $items
+     *
+     * @throws InvalidItemOnList
+     */
+    private function assertItemsAreValid(?array $items): void
+    {
+        if (is_null($items) || empty($items)) {
+            return;
+        }
+        array_walk($items, function ($item) {
+            if (!$item instanceof ElectronicItem) {
+                throw new InvalidItemOnList('This list cannot receive this item');
+            }
+        });
+    }
+
+    /**
+     * @return float
+     */
     public function total(): float
     {
         return array_sum(array_map(fn($item) => $item->total(), $this->items));
@@ -48,7 +80,6 @@ class ElectronicItems implements \Countable
     {
         /**
          * Refactored to use Early returns (or Guard Clauses)
-         *
          * https://refactoring.guru/replace-nested-conditional-with-guard-clauses
          * https://medium.com/better-programming/refactoring-guard-clauses-2ceeaa1a9da
          */
@@ -61,28 +92,25 @@ class ElectronicItems implements \Countable
         }));
     }
 
+    /**
+     * @return int
+     */
     public function count()
     {
         return count($this->items);
     }
 
-    private function assertItemsAreValid(?array $items): void
-    {
-        if (is_null($items) || empty($items)) {
-            return;
-        }
-        array_walk($items, function ($item) {
-            if (!$item instanceof ElectronicItem) {
-                throw new InvalidItemOnList('This list cannot receive this item');
-            }
-        });
-    }
-
+    /**
+     * @return array|ElectronicItem[]
+     */
     public function items(): array
     {
         return $this->items;
     }
 
+    /**
+     * @return array|array[]
+     */
     public function toArray()
     {
         return array_map(function ($item) {

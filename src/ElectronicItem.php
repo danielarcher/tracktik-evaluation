@@ -4,6 +4,11 @@ namespace Store;
 
 use Store\Exceptions\MaxExtrasAttached;
 
+/**
+ * Class ElectronicItem
+ *
+ * @package Store
+ */
 abstract class ElectronicItem
 {
     /**
@@ -26,6 +31,14 @@ abstract class ElectronicItem
      */
     private $extras;
 
+    /**
+     * ElectronicItem constructor.
+     *
+     * @param                      $price
+     * @param ElectronicItems|null $extras
+     *
+     * @throws MaxExtrasAttached
+     */
     public function __construct($price, ?ElectronicItems $extras = null)
     {
         $this->price  = $price;
@@ -33,6 +46,11 @@ abstract class ElectronicItem
         $this->assertMaxExtrasItems($this->extras);
     }
 
+    /**
+     * @param ElectronicItems|null $extras
+     *
+     * @throws MaxExtrasAttached
+     */
     private function assertMaxExtrasItems(?ElectronicItems $extras): void
     {
         if ($this->maxExtras() < 0 || is_null($extras)) {
@@ -43,20 +61,35 @@ abstract class ElectronicItem
         }
     }
 
+    /**
+     * @return int
+     */
     abstract public function maxExtras(): int;
 
+    /**
+     * @return string
+     */
     function type(): string
     {
         return $this->type;
     }
 
+    /**
+     * @return float
+     */
     function price(): float
     {
         return $this->price;
     }
 
+    /**
+     * @return bool
+     */
     abstract function isWired(): bool;
 
+    /**
+     * @return array
+     */
     public function toArray(): array
     {
         return [
@@ -65,11 +98,17 @@ abstract class ElectronicItem
         ];
     }
 
+    /**
+     * @return float
+     */
     public function total(): float
     {
         return $this->price + ($this->extras ? $this->extras->total() : 0);
     }
 
+    /**
+     * @return ElectronicItems|null
+     */
     public function extras(): ?ElectronicItems
     {
         return $this->extras;

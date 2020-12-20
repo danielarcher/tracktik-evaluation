@@ -2,7 +2,14 @@
 
 namespace Store\Exceptions;
 
-class InvalidType extends \Exception
+use Exception;
+
+/**
+ * Class InvalidType
+ *
+ * @package Store\Exceptions
+ */
+class InvalidType extends Exception
 {
 
 }

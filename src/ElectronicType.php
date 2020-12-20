@@ -2,6 +2,11 @@
 
 namespace Store;
 
+/**
+ * Class ElectronicType
+ *
+ * @package Store
+ */
 class ElectronicType
 {
     const TELEVISION = 'television';
@@ -9,6 +14,9 @@ class ElectronicType
     const MICROWAVE  = 'microwave';
     const CONTROLLER = 'controller';
 
+    /**
+     * @var string[]
+     */
     public static $types = [
         self::CONSOLE,
         self::MICROWAVE,

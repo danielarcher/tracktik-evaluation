@@ -2,7 +2,14 @@
 
 namespace Store\Exceptions;
 
-class InvalidItemOnList extends \Exception
+use Exception;
+
+/**
+ * Class InvalidItemOnList
+ *
+ * @package Store\Exceptions
+ */
+class InvalidItemOnList extends Exception
 {
 
 }
