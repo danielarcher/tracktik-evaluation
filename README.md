@@ -32,3 +32,38 @@ You will be evaluated by several TrackTik developers on the following aspects: (
 - Code Structure
 - Application of Object-Oriented Concepts
 - Technical Level of Solution vs your level of expertise
+
+# Output of index.php
+My basket
+
+- Item: console, price: US$ 300, total: US$ 360
+    - Extra: controller wired, price: US$ 20
+    - Extra: controller wired, price: US$ 20
+    - Extra: controller 1, price: US$ 10
+    - Extra: controller 1, price: US$ 10
+- Item: television, price: US$ 100, total: US$ 140
+    - Extra: controller wired, price: US$ 20
+    - Extra: controller wired, price: US$ 20
+- Item: television, price: US$ 200, total: US$ 220
+    - Extra: controller wired, price: US$ 20
+
+Sorted Items
+
+- Item: television, price: US$ 100, total: US$ 140
+    - Extra: controller , price: US$ 20
+    - Extra: controller , price: US$ 20
+- Item: television, price: US$ 200, total: US$ 220
+    - Extra: controller , price: US$ 20
+- Item: console, price: US$ 300, total: US$ 360
+    - Extra: controller , price: US$ 20
+    - Extra: controller , price: US$ 20
+    - Extra: controller wired, price: US$ 10
+    - Extra: controller wired, price: US$ 10
+
+Total for item console: price: 300 total with extras: 360
+
+# Extras
+## Test cases
+![test cases](test-cases.jpg "Test cases")
+## Code Coverage
+![coverage](coverage.jpg "Code Coverage")

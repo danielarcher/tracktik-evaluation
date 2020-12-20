@@ -25,18 +25,37 @@ $basket = new ElectronicItems([
     ])),
 ]);
 
-echo "<pre>";
+?>
 
+My basket
+<ul>
+<?php foreach ($basket->toArray() as $item): ?>
+    <li>Item: <?php echo $item['type'] ?>, price: US$ <?php echo $item['price'] ?>, total: US$ <?php echo $item['total'] ?>
+        <ul>
+            <?php foreach ($item['extras'] as $extra): ?>
+                <li>Extra: <?php echo $extra['type'] ?> <?php echo $extra['wired'] ?: 'wired'; ?>, price: US$ <?php echo $extra['price'] ?></li>
+            <?php endforeach; ?>
+        </ul>
+    </li>
+<?php endforeach; ?>
+</ul>
 
-echo "My Items in the basket:".PHP_EOL;
-print_r($basket->toArray());
+Sorted Items
+<ul>
+    <?php foreach ($basket->sortedItems() as $item): ?>
+        <li>Item: <?php echo $item->type() ?>, price: US$ <?php echo $item->price() ?>, total: US$ <?php echo $item->total() ?>
+            <ul>
+                <?php foreach ($item->extras()->items() as $extra): ?>
+                    <li>Extra: <?php echo $extra->type() ?> <?php echo $extra->isWired() ? 'wired' : ''; ?>, price: US$ <?php echo $extra->price() ?></li>
+                <?php endforeach; ?>
+            </ul>
+        </li>
+    <?php endforeach; ?>
+</ul>
 
-echo "My Items sorted:".PHP_EOL;
-print_r(array_map(function($item) {
-    return [$item->type() => ['price' => $item->price(), 'extras' => $item->extras()->total()]];
-},$basket->sortedItems()));
+<?php
 
-echo 'Total for item Console: '.PHP_EOL;
+echo 'Total for item '.ElectronicType::CONSOLE.': '.PHP_EOL;
 
 print_r('price: '.$basket->itemsByType(ElectronicType::CONSOLE)[0]->price().PHP_EOL);
 print_r('total with extras: '.$basket->itemsByType(ElectronicType::CONSOLE)[0]->total().PHP_EOL);

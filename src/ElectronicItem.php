@@ -75,14 +75,6 @@ abstract class ElectronicItem
     }
 
     /**
-     * @return float
-     */
-    function price(): float
-    {
-        return $this->price;
-    }
-
-    /**
      * @return bool
      */
     abstract function isWired(): bool;
@@ -93,9 +85,20 @@ abstract class ElectronicItem
     public function toArray(): array
     {
         return [
-            $this->type() => $this->total(),
-            'extras'      => $this->extras() ? $this->extras()->toArray() : null,
+            'type'   => $this->type(),
+            'price'  => $this->price(),
+            'total'  => $this->total(),
+            'wired'  => $this->isWired(),
+            'extras' => $this->extras() ? $this->extras()->toArray() : null,
         ];
+    }
+
+    /**
+     * @return float
+     */
+    function price(): float
+    {
+        return $this->price;
     }
 
     /**
