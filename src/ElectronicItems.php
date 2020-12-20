@@ -52,13 +52,13 @@ class ElectronicItems implements \Countable
          * https://refactoring.guru/replace-nested-conditional-with-guard-clauses
          * https://medium.com/better-programming/refactoring-guard-clauses-2ceeaa1a9da
          */
-        if (in_array($type, ElectronicType::$types)) {
+        if (!in_array($type, ElectronicType::$types)) {
             throw new InvalidType('Invalid type selected');
         }
 
-        return array_filter($this->items, function ($item) use ($type) {
+        return array_values(array_filter($this->items, function ($item) use ($type) {
             return $item->type() == $type;
-        });
+        }));
     }
 
     public function count()
@@ -76,5 +76,17 @@ class ElectronicItems implements \Countable
                 throw new InvalidItemOnList('This list cannot receive this item');
             }
         });
+    }
+
+    public function items(): array
+    {
+        return $this->items;
+    }
+
+    public function toArray()
+    {
+        return array_map(function ($item) {
+            return $item->toArray();
+        }, $this->items);
     }
 }

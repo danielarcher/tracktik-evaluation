@@ -5,6 +5,7 @@ use Store\ElectronicItems;
 use Store\Electronics\Console;
 use Store\Electronics\Microwave;
 use Store\Electronics\RemoteController;
+use Store\Electronics\Television;
 use Store\Exceptions\MaxExtrasAttached;
 
 class ElectronicItemTest extends TestCase
@@ -46,6 +47,15 @@ class ElectronicItemTest extends TestCase
         $item = new Microwave(1, new ElectronicItems([
             new RemoteController(1),
         ]));
+    }
+    public function test_television_should_accept_unlimited_extras()
+    {
+        $extras = [];
+        foreach (range(1, 100) as $i) {
+            $extras[] = new RemoteController(1);
+        }
+        $item = new Television(1, new ElectronicItems($extras));
+        $this->assertEquals(100, count($item->extras()));
     }
     public function test_should_accept_item_without_extras()
     {

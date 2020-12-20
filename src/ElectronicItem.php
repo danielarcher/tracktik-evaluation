@@ -43,16 +43,6 @@ abstract class ElectronicItem
         }
     }
 
-    public function total(): float
-    {
-        return $this->price + ($this->extras ? $this->extras->total() : 0);
-    }
-
-    public function extras(): ?ElectronicItems
-    {
-        return $this->extras;
-    }
-
     abstract public function maxExtras(): int;
 
     function type(): string
@@ -66,4 +56,22 @@ abstract class ElectronicItem
     }
 
     abstract function isWired(): bool;
+
+    public function toArray(): array
+    {
+        return [
+            $this->type() => $this->total(),
+            'extras'      => $this->extras() ? $this->extras()->toArray() : null,
+        ];
+    }
+
+    public function total(): float
+    {
+        return $this->price + ($this->extras ? $this->extras->total() : 0);
+    }
+
+    public function extras(): ?ElectronicItems
+    {
+        return $this->extras;
+    }
 }

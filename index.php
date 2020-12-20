@@ -26,5 +26,17 @@ $basket = new ElectronicItems([
 ]);
 
 echo "<pre>";
-print_r($basket->sortedItems());
-print_r($basket->itemsByType(ElectronicType::CONSOLE));
+
+
+echo "My Items in the basket:".PHP_EOL;
+print_r($basket->toArray());
+
+echo "My Items sorted:".PHP_EOL;
+print_r(array_map(function($item) {
+    return [$item->type() => ['price' => $item->price(), 'extras' => $item->extras()->total()]];
+},$basket->sortedItems()));
+
+echo 'Total for item Console: '.PHP_EOL;
+
+print_r('price: '.$basket->itemsByType(ElectronicType::CONSOLE)[0]->price().PHP_EOL);
+print_r('total with extras: '.$basket->itemsByType(ElectronicType::CONSOLE)[0]->total().PHP_EOL);
