@@ -9,6 +9,7 @@ use Store\Electronics\Television;
 use Store\Electronics\WiredController;
 use Store\ElectronicType;
 use Store\Exceptions\InvalidItemOnList;
+use Store\Exceptions\InvalidType;
 
 class ElectronicItemsTest extends TestCase
 {
@@ -59,5 +60,42 @@ class ElectronicItemsTest extends TestCase
     {
         $list = new ElectronicItems([]);
         $this->assertInstanceOf(ElectronicItems::class, $list);
+    }
+    public function test_it_should_return_correct_items_per_type()
+    {
+        $list = new ElectronicItems([
+            new Television(1),
+            new Console(1),
+            new Microwave(1),
+        ]);
+        $this->assertInstanceOf(Microwave::class, $list->itemsByType(ElectronicType::MICROWAVE)[0]);
+    }
+    public function test_it_should_return_empty_when_no_items_per_type_found()
+    {
+        $list = new ElectronicItems([
+            new Television(1),
+            new Console(1),
+            new Microwave(1),
+        ]);
+        $this->assertEmpty($list->itemsByType(ElectronicType::CONTROLLER));
+    }
+    public function test_it_should_return_exception_when_invalid_type_given()
+    {
+        $this->expectException(InvalidType::class);
+        $list = new ElectronicItems([
+            new Television(1),
+            new Console(1),
+            new Microwave(1),
+        ]);
+        $list->itemsByType('invalid_type');
+    }
+    public function test_it_should_return_array_of_items()
+    {
+        $list = new ElectronicItems([
+            new Television(1),
+            new Console(1),
+            new Microwave(1),
+        ]);
+        $this->assertIsArray($list->toArray());
     }
 }

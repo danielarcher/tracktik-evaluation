@@ -101,6 +101,7 @@ class ElectronicItems implements \Countable
     }
 
     /**
+     * @codeCoverageIgnore
      * @return array|ElectronicItem[]
      */
     public function items(): array

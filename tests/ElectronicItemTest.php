@@ -1,11 +1,13 @@
 <?php
 
 use PHPUnit\Framework\TestCase;
+use Store\ElectronicItem;
 use Store\ElectronicItems;
 use Store\Electronics\Console;
 use Store\Electronics\Microwave;
 use Store\Electronics\RemoteController;
 use Store\Electronics\Television;
+use Store\Electronics\WiredController;
 use Store\Exceptions\MaxExtrasAttached;
 
 class ElectronicItemTest extends TestCase
@@ -61,5 +63,24 @@ class ElectronicItemTest extends TestCase
     {
         $console = new Microwave(1);
         $this->assertNull($console->extras());
+    }
+
+    /**
+     * @dataProvider wiredItems
+     */
+    public function test_should_check_if_item_is_wired($expected, ElectronicItem $item)
+    {
+        $this->assertEquals($expected, $item->isWired());
+    }
+
+    public function wiredItems()
+    {
+        return[
+            'Wired controller is wired' => [true, new WiredController(1)],
+            'Remote Controller is not wired' => [false, new RemoteController(1)],
+            'Microwave is not wired' => [false, new Microwave(1)],
+            'Television is not wired' => [false, new Television(1)],
+            'Console is not wired' => [false, new Console(1)],
+        ];
     }
 }
