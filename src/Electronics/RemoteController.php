@@ -6,7 +6,7 @@ use Store\ElectronicType;
 
 class RemoteController extends Controller
 {
-    const MAX_EXTRAS = 2;
+    const MAX_EXTRAS = 0;
 
     protected $type = ElectronicType::CONTROLLER;
 

@@ -3,11 +3,30 @@
 use PHPUnit\Framework\TestCase;
 use Store\ElectronicItems;
 use Store\Electronics\Console;
+use Store\Electronics\Microwave;
 use Store\Electronics\RemoteController;
+use Store\Electronics\Television;
 use Store\Electronics\WiredController;
+use Store\ElectronicType;
 
-class TotalCountTest extends TestCase
+class ElectronicItemsTest extends TestCase
 {
+    public function test_should_create_class_successfully()
+    {
+        $list = new ElectronicItems([
+            new RemoteController(1),
+        ]);
+        $this->assertInstanceOf(ElectronicItems::class, $list);
+    }
+    public function test_should_sort_items_correctly()
+    {
+        $list = new ElectronicItems([
+            new Console(3),
+            new Television(1),
+            new Microwave(2),
+        ]);
+        $this->assertEquals(ElectronicType::TELEVISION, $list->sortedItems()[0]->type());
+    }
     public function test_should_return_total_of_items()
     {
         $list = new ElectronicItems([

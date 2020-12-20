@@ -6,7 +6,7 @@ use Store\ElectronicType;
 
 class Console extends \Store\ElectronicItem
 {
-    const MAX_EXTRAS = 2;
+    const MAX_EXTRAS = 4;
 
     protected $type = ElectronicType::CONSOLE;
 

@@ -7,7 +7,7 @@ use Store\Electronics\Microwave;
 use Store\Electronics\RemoteController;
 use Store\Exceptions\MaxExtrasAttached;
 
-class MaxExtrasTest extends TestCase
+class ElectronicItemTest extends TestCase
 {
     public function test_should_accept_less_than_max_extras()
     {
@@ -17,11 +17,23 @@ class MaxExtrasTest extends TestCase
         ]));
         $this->assertEquals(2, count($console->extras()));
     }
+    public function test_should_accept_exact_quantity_of_max_extras()
+    {
+        $console = new Console(1, new ElectronicItems([
+            new RemoteController(1),
+            new RemoteController(1),
+            new RemoteController(1),
+            new RemoteController(1),
+        ]));
+        $this->assertEquals(4, count($console->extras()));
+    }
     public function test_should_not_accept_more_than_max_extras()
     {
         $this->expectException(MaxExtrasAttached::class);
 
-        $console = new Console(1, new ElectronicItems([
+        $item = new Console(1, new ElectronicItems([
+            new RemoteController(1),
+            new RemoteController(1),
             new RemoteController(1),
             new RemoteController(1),
             new RemoteController(1),
@@ -31,7 +43,7 @@ class MaxExtrasTest extends TestCase
     {
         $this->expectException(MaxExtrasAttached::class);
 
-        $console = new Microwave(1, new ElectronicItems([
+        $item = new Microwave(1, new ElectronicItems([
             new RemoteController(1),
         ]));
     }

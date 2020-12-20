@@ -11,19 +11,20 @@ use Store\ElectronicType;
 
 $basket = new ElectronicItems([
     new Console(300.00, new ElectronicItems([
-        new RemoteController(10.00),
-        new RemoteController(10.00),
+        new RemoteController(20.00),
+        new RemoteController(20.00),
         new WiredController(10.00),
         new WiredController(10.00),
     ])),
     new Television(100.00, new ElectronicItems([
-        new RemoteController(10.00),
-        new RemoteController(10.00),
+        new RemoteController(20.00),
+        new RemoteController(20.00),
     ])),
     new Television(200.00, new ElectronicItems([
-        new RemoteController(10.00),
+        new RemoteController(20.00),
     ])),
 ]);
 
+echo "<pre>";
 print_r($basket->sortedItems());
-print_r($basket->getItemsByType(ElectronicType::CONSOLE));
+print_r($basket->itemsByType(ElectronicType::CONSOLE));

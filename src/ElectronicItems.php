@@ -2,6 +2,9 @@
 
 namespace Store;
 
+use Store\Exceptions\InvalidItemOnList;
+use Store\Exceptions\InvalidType;
+
 class ElectronicItems implements \Countable
 {
     /**
@@ -12,6 +15,7 @@ class ElectronicItems implements \Countable
     public function __construct(array $items)
     {
         $this->items = $items;
+        $this->assertItemsAreValid($items);
     }
 
     public function total(): float
@@ -26,6 +30,9 @@ class ElectronicItems implements \Countable
      */
     public function sortedItems(): array
     {
+        /**
+         * Refactored to use a more simple and direct approach
+         */
         usort($this->items, function ($a, $b) {
             return $a->price() - $b->price();
         });
@@ -37,19 +44,34 @@ class ElectronicItems implements \Countable
      *
      * @return array
      */
-    public function getItemsByType($type)
+    public function itemsByType(string $type): array
     {
-        if (in_array($type, ElectronicItem::$types)) {
-            $callback = function ($item) use ($type) {
-                return $item->type == $type;
-            };
-            $items    = array_filter($this->items, $callback);
+        /**
+         * Refactored to use Early returns (or Guard Clauses)
+         *
+         * https://refactoring.guru/replace-nested-conditional-with-guard-clauses
+         * https://medium.com/better-programming/refactoring-guard-clauses-2ceeaa1a9da
+         */
+        if (in_array($type, ElectronicType::$types)) {
+            throw new InvalidType('Invalid type selected');
         }
-        return false;
+
+        return array_filter($this->items, function ($item) use ($type) {
+            return $item->type() == $type;
+        });
     }
 
     public function count()
     {
         return count($this->items);
+    }
+
+    private function assertItemsAreValid(?array $items)
+    {
+        array_walk($items, function ($item) {
+            if (get_class($item) != ElectronicItem::class) {
+                #throw new InvalidItemOnList('This list cannot receive this item');
+            }
+        });
     }
 }
