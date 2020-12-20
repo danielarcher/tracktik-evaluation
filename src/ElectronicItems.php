@@ -2,8 +2,11 @@
 
 namespace Store;
 
-class ElectronicItems
+class ElectronicItems implements \Countable
 {
+    /**
+     * @var ElectronicItem[]
+     */
     private $items = [];
 
     public function __construct(array $items)
@@ -16,8 +19,13 @@ class ElectronicItems
      *
      * @return array
      */
-    public function getSortedItems($type)
+    public function sortedItems(): array
     {
+        usort($this->items, function ($a, $b) {
+            return $a->price() - $b->price();
+        });
+        return $this->items;
+
         $sorted = [];
         foreach ($this->items as $item) {
             $sorted[($item->price * 100)] = $item;
@@ -39,5 +47,10 @@ class ElectronicItems
             $items    = array_filter($this->items, $callback);
         }
         return false;
+    }
+
+    public function count()
+    {
+        return count($this->items);
     }
 }

@@ -1,6 +1,8 @@
 {
     "name": "tracktik/evaluation",
-    "require": {},
+    "require": {
+        "phpunit/phpunit": "^8.5"
+    },
     "autoload": {
         "psr-4": {
             "Store\\": "src/"

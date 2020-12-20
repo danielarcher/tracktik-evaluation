@@ -2,54 +2,63 @@
 
 namespace Store;
 
-class ElectronicItem
-{
-    const ELECTRONIC_ITEM_TELEVISION = 'television';
-    const ELECTRONIC_ITEM_CONSOLE    = 'console';
-    const ELECTRONIC_ITEM_MICROWAVE  = 'microwave';
+use Store\Exceptions\MaxExtrasAttached;
 
-    public static $types = [
-        self::ELECTRONIC_ITEM_CONSOLE,
-        self::ELECTRONIC_ITEM_MICROWAVE,
-        self::ELECTRONIC_ITEM_TELEVISION
-    ];
+abstract class ElectronicItem
+{
     /**
      * @var float
      */
     public $price;
+
+    /**
+     * @var bool
+     */
     public $wired;
+
     /**
      * @var string
      */
-    private $type;
+    protected $type;
 
-    function getPrice()
+    /**
+     * @var ElectronicItems|null
+     */
+    private $extras;
+
+    public function __construct($price, ?ElectronicItems $extras = null)
     {
-        return $this->price;
+        $this->price  = $price;
+        $this->extras = $extras;
+        $this->assertMaxExtrasItems($this->extras);
     }
 
-    function setPrice($price)
+    private function assertMaxExtrasItems(?ElectronicItems $extras): void
     {
-        $this->price = $price;
+        if ($this->maxExtras() < 0 || is_null($extras)) {
+            return;
+        }
+        if (count($extras) > $this->maxExtras()) {
+            throw new MaxExtrasAttached('Max items attached on ' . $this->type());
+        }
     }
 
-    function getType()
+    public function extras(): ?ElectronicItems
+    {
+        return $this->extras;
+    }
+
+    abstract public function maxExtras(): int;
+
+    function type(): string
     {
         return $this->type;
     }
 
-    function setType($type)
+    function price(): float
     {
-        $this->type = $type;
+        return $this->price;
     }
 
-    function getWired()
-    {
-        return $this->wired;
-    }
-
-    function setWired($wired)
-    {
-        $this->wired = $wired;
-    }
+    abstract function isWired(): bool;
 }
