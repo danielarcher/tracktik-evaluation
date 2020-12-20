@@ -30,12 +30,6 @@ class ElectronicItems implements \Countable
             return $a->price() - $b->price();
         });
         return $this->items;
-
-        $sorted = [];
-        foreach ($this->items as $item) {
-            $sorted[($item->price * 100)] = $item;
-        }
-        return ksort($sorted, SORT_NUMERIC);
     }
 
     /**
