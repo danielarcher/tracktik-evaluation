@@ -14,6 +14,11 @@ class ElectronicItems implements \Countable
         $this->items = $items;
     }
 
+    public function total(): float
+    {
+        return array_sum(array_map(fn($item) => $item->total(), $this->items));
+    }
+
     /**
      * Returns the items depending on the sorting type requested
      *

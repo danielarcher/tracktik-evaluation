@@ -43,6 +43,11 @@ abstract class ElectronicItem
         }
     }
 
+    public function total(): float
+    {
+        return $this->price + ($this->extras ? $this->extras->total() : 0);
+    }
+
     public function extras(): ?ElectronicItems
     {
         return $this->extras;
