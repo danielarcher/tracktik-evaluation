@@ -66,11 +66,14 @@ class ElectronicItems implements \Countable
         return count($this->items);
     }
 
-    private function assertItemsAreValid(?array $items)
+    private function assertItemsAreValid(?array $items): void
     {
+        if (is_null($items) || empty($items)) {
+            return;
+        }
         array_walk($items, function ($item) {
-            if (get_class($item) != ElectronicItem::class) {
-                #throw new InvalidItemOnList('This list cannot receive this item');
+            if (!$item instanceof ElectronicItem) {
+                throw new InvalidItemOnList('This list cannot receive this item');
             }
         });
     }

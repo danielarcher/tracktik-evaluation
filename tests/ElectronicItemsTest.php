@@ -8,6 +8,7 @@ use Store\Electronics\RemoteController;
 use Store\Electronics\Television;
 use Store\Electronics\WiredController;
 use Store\ElectronicType;
+use Store\Exceptions\InvalidItemOnList;
 
 class ElectronicItemsTest extends TestCase
 {
@@ -46,5 +47,17 @@ class ElectronicItemsTest extends TestCase
             new RemoteController(1),
         ]);
         $this->assertEquals(4, $list->total());
+    }
+    public function test_should_not_accept_external_classes()
+    {
+        $this->expectException(InvalidItemOnList::class);
+        $list = new ElectronicItems([
+            new stdClass(),
+        ]);
+    }
+    public function test_should_accept_empty_list()
+    {
+        $list = new ElectronicItems([]);
+        $this->assertInstanceOf(ElectronicItems::class, $list);
     }
 }
